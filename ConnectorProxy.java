@@ -14,7 +14,7 @@ public class ConnectorProxy {
             try {
                 conduct(binding);
             } catch (Exception ex) {
-                Logger.error("Caught error while piping a DataWire", ex);
+                Logger.error("Caught error while piping a Binding", ex);
             }
         } else {
             conduct(binding);

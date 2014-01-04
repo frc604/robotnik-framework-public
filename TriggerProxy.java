@@ -13,7 +13,7 @@ public class TriggerProxy {
             try {
                 trigger.update();
             } catch (Exception ex) {
-                InternalLogger.caught(moduleName, "Data", triggerName, "run", ex);
+                InternalLogger.caught(moduleName, "Trigger", triggerName, "run", ex);
             }
         } else {
             trigger.update();

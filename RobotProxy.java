@@ -15,7 +15,7 @@ public class RobotProxy {
             try {
                 process(mode, modules, coordinators);
             } catch (Exception ex) {
-                Logger.error("Caught error in main loop", ex);
+                Logger.error("Caught error in main tick loop", ex);
             }
         } else {
             process(mode, modules, coordinators);
@@ -36,7 +36,7 @@ public class RobotProxy {
             try {
                 modules.update();
             } catch (Exception ex) {
-                Logger.error("Caught error in main loop", ex);
+                Logger.error("Caught error in main update loop", ex);
             }
         } else {
             modules.update();
@@ -48,7 +48,7 @@ public class RobotProxy {
             try {
                 modules.end();
             } catch (Exception ex) {
-                Logger.error("Caught error in main loop", ex);
+                Logger.error("Caught error in main loop end", ex);
             }
         } else {
             modules.end();
