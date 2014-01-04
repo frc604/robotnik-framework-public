@@ -19,8 +19,15 @@ action would be to pull it in as a submodule.
 
         git submodule add git@github.com:frc604/robotnik-framework.git src/com/_604robotics/robotnik/
 
- 3. Commit your project with the submodule added:
+ 3. Switch over to the robotnik directory and pull in the code.
 
+        cd src/com/_604robotics/robotnik
+        git pull origin master
+
+ 4. Switch back to your project's root directory and commit your project with
+    the submodule added:
+
+        cd ../../../../
         git commit -am "Pull in robotnik-framework as a submodule"
 
 After installation, you'll probably want to pull in new changes periodically,
