@@ -3,7 +3,7 @@ package com._604robotics.robotnik.logging;
 import com.sun.squawk.microedition.io.FileConnection;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Date;
+import java.util.Random;
 import javax.microedition.io.Connector;
 
 public class Logger {
@@ -40,7 +40,7 @@ public class Logger {
         Exception error = null;
         
         try {
-            final FileConnection file = (FileConnection) Connector.open("file:///" + new Date().toString() + ".txt", Connector.WRITE);
+            final FileConnection file = (FileConnection) Connector.open("file:///" + new Random().nextInt() + ".txt", Connector.WRITE);
             file.create();
             
             result = new PrintStream(file.openDataOutputStream());
