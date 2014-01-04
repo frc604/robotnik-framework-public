@@ -22,7 +22,7 @@ public class Logger {
     }
     
     private static void record (PrintStream std, String message) {
-        final String line = System.currentTimeMillis() + message;
+        final String line = "(" + System.currentTimeMillis() + " ms) " + message;
         
         std.println(line);
         if (logFile != null) logFile.println(message);
