@@ -7,10 +7,10 @@ import com._604robotics.robotnik.logging.InternalLogger;
 import java.util.Hashtable;
 
 public class ModuleManager {
-    private final Hashtable moduleTable = new Hashtable();
+    private final Hashtable moduleTable;
     
     public ModuleManager (ModuleMap moduleMap, final IndexedTable table) {
-        Repackager.repackage(moduleMap.iterate(), new Repackager() {
+        this.moduleTable = Repackager.repackage(moduleMap.iterate(), new Repackager() {
             public Object wrap (Object key, Object value) {
                 return new ModuleReference((String) key, (Module) value, table.getSubTable((String) key));
             }
