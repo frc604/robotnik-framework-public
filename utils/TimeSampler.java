@@ -25,7 +25,7 @@ public class TimeSampler {
         this.samples++;
         
         if (this.timer.get() >= this.time) {
-            Logger.log(" --- " + name + " time: " + (this.timer.get() / this.samples) + " ms (n = " + this.samples + ")");
+            Logger.log(" --- " + name + " time: " + ((this.timer.get() / this.samples) * 1000) + " ms (n = " + this.samples + ")");
 
             this.samples = 0;
             this.timer.reset();
