@@ -16,9 +16,14 @@ public class Iterator {
     }
 
     public boolean next () {
-        this.key = this.keys.nextElement();
-        this.value = this.values.nextElement();
-
-        return this.key == null && this.value == null;
+        if (this.keys.hasMoreElements() && this.values.hasMoreElements()) {
+            this.key = this.keys.nextElement();
+            this.value = this.values.nextElement();
+            return true;
+        } else {
+            this.key = null;
+            this.value = null;
+            return false;
+        }
     }
 }
