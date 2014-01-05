@@ -39,8 +39,10 @@ public class Logger {
         PrintStream result = null;
         Exception error = null;
         
+        final String fileName = new Random().nextInt() + ".txt";
+        
         try {
-            final FileConnection file = (FileConnection) Connector.open("file:///" + new Random().nextInt() + ".txt", Connector.WRITE);
+            final FileConnection file = (FileConnection) Connector.open("file:///" + fileName, Connector.WRITE);
             file.create();
             
             result = new PrintStream(file.openDataOutputStream());
@@ -52,6 +54,8 @@ public class Logger {
         
         if (error != null) {
             error("Could not open log file", error);
+        } else {
+            log("Recording to log file on cRIO: " + fileName);
         }
     }
 }
