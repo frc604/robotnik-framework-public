@@ -25,7 +25,7 @@ public class Logger {
         final String line = "(" + System.currentTimeMillis() + " ms) " + message;
         
         std.println(line);
-        if (logFile != null) logFile.println(message);
+        if (logFile != null) logFile.println(line);
     }
     
     private static void trace (Exception ex) {
