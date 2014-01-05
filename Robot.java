@@ -7,7 +7,7 @@ import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.module.ModuleMap;
 import com._604robotics.robotnik.memory.IndexedTable;
 import com._604robotics.robotnik.logging.Logger;
-import com._604robotics.robotnik.utils.TimeSampler;
+import com._604robotics.robotnik.logging.TimeSampler;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 public class Robot extends SimpleRobot {

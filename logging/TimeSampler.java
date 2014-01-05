@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.utils;
+package com._604robotics.robotnik.logging;
 
 import com._604robotics.robotnik.logging.Logger;
 import com.sun.squawk.util.MathUtils;
@@ -26,7 +26,7 @@ public class TimeSampler {
         this.samples++;
         
         if (this.timer.get() >= this.time) {
-            Logger.log(" --- " + name + " time: " + MathUtils.round((this.timer.get() / this.samples) * 1000) + " ms (n = " + this.samples + ")");
+            Logger.log(" --- " + name + " time: " + MathUtils.round((this.timer.get() / this.samples) * 1000) + " ms (" + this.samples + " loops / second)");
 
             this.samples = 0;
             this.timer.reset();
