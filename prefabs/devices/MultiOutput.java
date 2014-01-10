@@ -17,5 +17,9 @@ public class MultiOutput implements PIDOutput {
 
     public void pidWrite (double value) {
         this.set(value);
-    }    
+    }
+    
+    public void stopMotor () {
+        this.set(0D);
+    }
 }
