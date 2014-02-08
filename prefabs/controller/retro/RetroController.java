@@ -4,13 +4,18 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 public class RetroController {
+    public static interface Stick {
+        public static final String LEFT  = "LEFT";
+        public static final String RIGHT = "RIGHT";
+    }
+    
     public final RetroControllerButtons buttons;
     
     public final RetroControllerAxis axisX;
     public final RetroControllerAxis axisY;
     
-    public RetroController (int port) {
-        final ITable table = NetworkTable.getTable("robotnik.controller");
+    public RetroController (String stick) {
+        final ITable table = NetworkTable.getTable("robotnik.controller").getSubTable(stick);
         
         this.buttons = new RetroControllerButtons(table.getSubTable("button"));
         
