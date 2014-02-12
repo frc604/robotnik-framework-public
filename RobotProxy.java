@@ -1,16 +1,16 @@
 package com._604robotics.robotnik;
 
-import com._604robotics.robotnik.coordinator.Coordinator;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.logging.Logger;
+import com._604robotics.robotnik.procedure.Procedure;
 
 public class RobotProxy {
     private static boolean active = true;
     
     protected static void disable () { active = false; }
     
-    public static void tick (Coordinator mode, ModuleManager modules, CoordinatorList coordinators) {
+    public static void tick (Procedure mode, ModuleManager modules, CoordinatorList coordinators) {
         if (active) {
             try {
                 process(mode, modules, coordinators);
@@ -22,7 +22,7 @@ public class RobotProxy {
         }
     }
     
-    private static void process (Coordinator mode, ModuleManager modules, CoordinatorList coordinators) {
+    private static void process (Procedure mode, ModuleManager modules, CoordinatorList coordinators) {
         modules.update();
 
         coordinators.update();
@@ -43,10 +43,11 @@ public class RobotProxy {
         }
     }
     
-    public static void end (ModuleManager modules) {
+    public static void end (Procedure mode, ModuleManager modules) {
         if (active) {
             try {
                 modules.end();
+                mode.reset();
             } catch (Exception ex) {
                 Logger.error("Caught error in main loop end", ex);
             }

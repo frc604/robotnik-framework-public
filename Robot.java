@@ -1,13 +1,13 @@
 package com._604robotics.robotnik;
 
-import com._604robotics.robotnik.coordinator.Coordinator;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
-import com._604robotics.robotnik.coordinator.ModeMap;
+import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.module.ModuleMap;
 import com._604robotics.robotnik.memory.IndexedTable;
 import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.logging.TimeSampler;
+import com._604robotics.robotnik.procedure.Procedure;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 public class Robot extends SimpleRobot {
@@ -55,13 +55,13 @@ public class Robot extends SimpleRobot {
         
         this.loopTime.start();
         
-        final Coordinator mode = this.modeMap.getAutonomousMode();
+        final Procedure mode = this.modeMap.getAutonomousMode();
         while (this.isEnabled() && this.isAutonomous()) {
             RobotProxy.tick(mode, moduleManager, coordinatorList);
             this.loopTime.sample();
         }
         
-        RobotProxy.end(moduleManager);
+        RobotProxy.end(mode, moduleManager);
         this.loopTime.stop();
 
         Logger.log(" -- Autonomous mode end.");
@@ -72,13 +72,13 @@ public class Robot extends SimpleRobot {
         
         this.loopTime.start();
         
-        final Coordinator mode = this.modeMap.getTeleopMode();
+        final Procedure mode = this.modeMap.getTeleopMode();
         while (this.isEnabled() && this.isOperatorControl()) {
             RobotProxy.tick(mode, moduleManager, coordinatorList);
             this.loopTime.sample();
         }
         
-        RobotProxy.end(moduleManager);
+        RobotProxy.end(mode, moduleManager);
         this.loopTime.stop();
         
         Logger.log(" -- Teleop mode end.");
