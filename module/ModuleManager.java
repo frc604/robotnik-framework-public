@@ -23,6 +23,11 @@ public class ModuleManager {
         return ref;
     }
     
+    public void start () {
+        final Iterator i = new Iterator(this.moduleTable);
+        while (i.next()) ((ModuleReference) i.value).start();
+    }
+    
     public void update () {
         final Iterator i = new Iterator(this.moduleTable);
         while (i.next()) ((ModuleReference) i.value).update();

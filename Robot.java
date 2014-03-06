@@ -11,6 +11,11 @@ import com._604robotics.robotnik.procedure.Procedure;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 public class Robot extends SimpleRobot {
+    public static interface Safety {
+        public static boolean ENABLED  = true;
+        public static boolean DISABLED = false;
+    }
+    
     private final IndexedTable table = IndexedTable.getTable("robotnik");
     private final TimeSampler loopTime = new TimeSampler("Loop", 1D);
     
@@ -19,7 +24,7 @@ public class Robot extends SimpleRobot {
     private ModeMap modeMap = new ModeMap();
     
     public Robot () {}
-    public Robot(boolean safetyEnabled) {
+    public Robot (boolean safetyEnabled) {
         if (!safetyEnabled) {
             RobotProxy.disable();
             
@@ -54,6 +59,7 @@ public class Robot extends SimpleRobot {
         Logger.log(" -- Autonomous mode begin.");
         
         this.loopTime.start();
+        RobotProxy.start(moduleManager);
         
         final Procedure mode = this.modeMap.getAutonomousMode();
         while (this.isEnabled() && this.isAutonomous()) {
@@ -71,6 +77,7 @@ public class Robot extends SimpleRobot {
         Logger.log(" -- Teleop mode begin.");
         
         this.loopTime.start();
+        RobotProxy.start(moduleManager);
         
         final Procedure mode = this.modeMap.getTeleopMode();
         while (this.isEnabled() && this.isOperatorControl()) {

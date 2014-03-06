@@ -1,6 +1,6 @@
 package com._604robotics.robotnik.coordinator.connectors;
 
-import com._604robotics.robotnik.action.ActionReference;
+import com._604robotics.robotnik.prefabs.trigger.TriggerAlways;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 import com._604robotics.robotnik.trigger.TriggerRecipient;
 
@@ -10,15 +10,20 @@ public class Binding {
     
     private final boolean safety;
     
-    public Binding (TriggerRecipient recipient, TriggerAccess trigger) {
-        this.recipient = recipient;
-        this.trigger = trigger;
-        
-        this.safety = false;
+    public Binding (TriggerRecipient recipient) {
+        this(recipient, TriggerAlways.getInstance(), false);
     }
     
-    public Binding (ActionReference action, TriggerAccess trigger, boolean safety) {
-        this.recipient = action;
+    public Binding (TriggerRecipient recipient, boolean safety) {
+        this(recipient, TriggerAlways.getInstance(), safety);
+    }
+    
+    public Binding (TriggerRecipient recipient, TriggerAccess trigger) {
+        this(recipient, trigger, false);
+    }
+    
+    public Binding (TriggerRecipient recipient, TriggerAccess trigger, boolean safety) {
+        this.recipient = recipient;
         this.trigger = trigger;
         
         this.safety = safety;

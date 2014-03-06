@@ -29,15 +29,13 @@ public class DataMeasure extends Measure {
     public boolean complete () {
         double value = data.get();
         if ((mode & DELTA) == DELTA)
-            value -= target;
+            value -= initialValue;
         
-        switch (mode) {
-            case LOWER_BOUND:
-                return value <= target;
-            case UPPER_BOUND:
-                return value >= target;
-            default:
-                return false;
-        }
+        if ((mode & LOWER_BOUND) == LOWER_BOUND)
+            return value <= target;
+        else if ((mode & UPPER_BOUND) == UPPER_BOUND)
+            return value >= target;
+        else
+            return false;
     }
 }

@@ -1,6 +1,7 @@
 package com._604robotics.robotnik.logging;
 
 import com.sun.squawk.microedition.io.FileConnection;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Random;
@@ -38,24 +39,23 @@ public class Logger {
     static {
         PrintStream result = null;
         Exception error = null;
-        
-        final String fileName = new Random().nextInt() + ".txt";
-        
+        /*
         try {
-            final FileConnection file = (FileConnection) Connector.open("file:///" + fileName, Connector.WRITE);
-            file.create();
+            final FileConnection file = (FileConnection) Connector.open("file:///robotnik.log", Connector.WRITE);
+            if (!file.exists())
+                file.create();
             
-            result = new PrintStream(file.openDataOutputStream());
+            result = null; new PrintStream(file.openOutputStream(file.fileSize()));
         } catch (IOException ex) {
             error = ex;
-        }
+        }*/
         
         logFile = result;
         
-        if (error != null) {
+        if (error != null)
             error("Could not open log file", error);
-        } else {
-            log("Recording to log file on cRIO: " + fileName);
-        }
+        else
+            log("Recording to log file \"robotnik.log\" on cRIO; session ID = "
+                    + new Random().nextInt());
     }
 }

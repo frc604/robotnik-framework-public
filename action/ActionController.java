@@ -13,9 +13,17 @@ public abstract class ActionController {
         this.actionTable.put(name, action);
     }
     
+    public void add (String name) {
+        this.add(name, new Action());
+    }
+    
     public void addDefault (String name, Action action) {
         this.add(name, action);
         this.defaultAction = name;
+    }
+    
+    public void addDefault (String name) {
+        this.addDefault(name, new Action());
     }
     
     protected String getDefaultAction () {

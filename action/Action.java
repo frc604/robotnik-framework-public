@@ -1,8 +1,9 @@
 package com._604robotics.robotnik.action;
 
 import com._604robotics.robotnik.action.field.FieldMap;
+import com._604robotics.robotnik.module.ModuleReference;
 
-public abstract class Action {
+public class Action {
     private final FieldMap fieldMap;
     
     public Action () {

@@ -24,7 +24,7 @@ public class TriggerManager {
     
     public TriggerReference getTrigger (String name) {
         TriggerReference ref = (TriggerReference) this.triggerTable.get(name);
-        if (ref == null) InternalLogger.missing("TriggerRefernece", name);
+        if (ref == null) InternalLogger.missing("TriggerReference", name);
         return ref;
     }
     

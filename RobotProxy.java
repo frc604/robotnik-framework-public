@@ -31,6 +31,10 @@ public class RobotProxy {
         modules.execute();
     }
     
+    public static void start (ModuleManager modules) {
+        modules.start();
+    }
+    
     public static void update (ModuleManager modules) {
         if (active) {
             try {

@@ -40,6 +40,7 @@ public class ConnectorProxy {
     }
     
     private static void conduct (DataWire wire) {
-        wire.getRecipient().sendData(wire.getFieldName(), wire.getData().get());
+        if (wire.isActive())
+            wire.getRecipient().sendData(wire.getFieldName(), wire.getData().get());
     }
 }

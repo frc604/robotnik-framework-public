@@ -4,7 +4,6 @@ import com._604robotics.robotnik.action.ActionController;
 import com._604robotics.robotnik.action.controllers.DummyController;
 import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.trigger.TriggerMap;
-import java.util.Vector;
 
 public abstract class Module {
     private DataMap dataMap = new DataMap();
@@ -12,8 +11,8 @@ public abstract class Module {
     
     private ActionController actionController = new DummyController();
     
-    private final Vector triggerBindings = new Vector();
-    private final Vector dataWires = new Vector();
+    protected void start () {}
+    protected void end () {}
     
     protected void set (DataMap dataMap) {
         this.dataMap = dataMap;

@@ -6,6 +6,7 @@ import com._604robotics.robotnik.meta.Repackager;
 import com._604robotics.robotnik.meta.Scorekeeper;
 import com._604robotics.robotnik.memory.IndexedTable;
 import com._604robotics.robotnik.logging.InternalLogger;
+import com._604robotics.robotnik.module.ModuleReference;
 import java.util.Hashtable;
 
 public class ActionManager {
@@ -17,7 +18,7 @@ public class ActionManager {
     private final IndexedTable statusTable;
     private final Hashtable actionTable;
     
-    public ActionManager (String moduleName, ActionController controller, final IndexedTable table) {
+    public ActionManager (final ModuleReference module, String moduleName, ActionController controller, final IndexedTable table) {
         this.moduleName = moduleName;
         
         this.controller = controller;
@@ -31,7 +32,7 @@ public class ActionManager {
         final IndexedTable dataTable = table.getSubTable("data");
         this.actionTable = Repackager.repackage(controller.iterate(), new Repackager() {
            public Object wrap (Object key, Object value) {
-               return new ActionReference((Action) value, triggerTable.getSlice((String) key), dataTable.getSubTable((String) key));
+               return new ActionReference(module, (Action) value, triggerTable.getSlice((String) key), dataTable.getSubTable((String) key));
            }
         });
     }

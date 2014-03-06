@@ -20,7 +20,7 @@ public class ModuleReference {
         this.dataManager = new DataManager(name, module.getDataMap(), table.getSubTable("data"));
         this.triggerManager = new TriggerManager(name, module.getTriggerMap(), table.getSubTable("triggers"));
         
-        this.actionManager = new ActionManager(name, module.getActionController(), table.getSubTable("actions"));
+        this.actionManager = new ActionManager(this, name, module.getActionController(), table.getSubTable("actions"));
         
         this.module = module;
     }
@@ -37,6 +37,10 @@ public class ModuleReference {
         return this.actionManager.getAction(name);
     }
     
+    public void start () {
+        this.module.start();
+    }
+    
     public void update () {
         this.dataManager.update();
         this.triggerManager.update();
@@ -51,5 +55,6 @@ public class ModuleReference {
     
     public void end () {
         this.actionManager.end();
+        this.module.end();
     }
 }
