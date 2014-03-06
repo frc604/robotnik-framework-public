@@ -10,18 +10,6 @@ public class Binding {
     
     private final boolean safety;
     
-    public Binding (TriggerRecipient recipient) {
-        this(recipient, TriggerAlways.getInstance(), false);
-    }
-    
-    public Binding (TriggerRecipient recipient, boolean safety) {
-        this(recipient, TriggerAlways.getInstance(), safety);
-    }
-    
-    public Binding (TriggerRecipient recipient, TriggerAccess trigger) {
-        this(recipient, trigger, false);
-    }
-    
     public Binding (TriggerRecipient recipient, TriggerAccess trigger, boolean safety) {
         this.recipient = recipient;
         this.trigger = trigger;
