@@ -24,12 +24,12 @@ public class ConnectorProxy {
     public static void pipe (DataWire wire) {
         if (active) {
             try {
-                conduct(wire);
+                wire.conduct();
             } catch (Exception ex) {
                 Logger.error("Caught error while piping a DataWire", ex);
             }
         } else {
-            conduct(wire);
+            wire.conduct();
         }
     }
     
@@ -37,10 +37,5 @@ public class ConnectorProxy {
         if (binding.getTrigger().get()) {
             binding.getRecipient().sendTrigger(binding.isSafety() ? 2D : 1D);
         }
-    }
-    
-    private static void conduct (DataWire wire) {
-        if (wire.isActive())
-            wire.getRecipient().sendData(wire.getFieldName(), wire.getData().get());
     }
 }

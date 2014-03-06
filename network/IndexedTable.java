@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.memory;
+package com._604robotics.robotnik.network;
 
 import edu.wpi.first.wpilibj.networktables2.util.Set;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -17,7 +17,8 @@ public class IndexedTable {
     }
     
     public Slice getSlice (String key) {
-        return new Slice(this, key);
+        addKey(key);
+        return new Slice(this.table, key);
     }
     
     public IndexedTable getSubTable(String key) {
@@ -50,25 +51,5 @@ public class IndexedTable {
     
     protected IndexedTable (ITable table) {
         this.table = table;
-    }
-    
-    public class Slice {
-        private final IndexedTable source;
-        private final String key;
-        
-        private Slice (IndexedTable source, String key) {
-            this.source = source;
-            this.key = key;
-        }
-        
-        public String  getString  (String  defaultValue) { return this.source.getString (this.key, defaultValue); }
-        public double  getNumber  (double  defaultValue) { return this.source.getNumber (this.key, defaultValue); }
-        public boolean getBoolean (boolean defaultValue) { return this.source.getBoolean(this.key, defaultValue); }
-        public Object  getValue   () throws TableKeyNotDefinedException { return this.source.getValue(this.key); }
-        
-        public void putString  (String  value) { this.source.putString (this.key, value); }
-        public void putNumber  (double  value) { this.source.putNumber (this.key, value); }
-        public void putBoolean (boolean value) { this.source.putBoolean(this.key, value); }
-        public void putValue   (Object  value) { this.source.putValue  (this.key, value); }
     }
 }

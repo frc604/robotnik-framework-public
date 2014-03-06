@@ -4,7 +4,7 @@ import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.module.ModuleMap;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.logging.TimeSampler;
 import com._604robotics.robotnik.procedure.Procedure;

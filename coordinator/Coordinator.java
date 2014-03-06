@@ -33,6 +33,17 @@ public class Coordinator {
         while (i.hasMoreElements()) ((Group) i.nextElement()).attach(modules);
     }
     
+    public void update () {
+        final Enumeration wires = this.dataWires.elements();
+        while (wires.hasMoreElements()) ConnectorProxy.pipe((DataWire) wires.nextElement());
+        
+        final Enumeration bindings = this.triggerBindings.elements();
+        while (bindings.hasMoreElements()) ConnectorProxy.pipe((Binding) bindings.nextElement());
+        
+        final Enumeration groups = this.subGroups.elements();
+        while (groups.hasMoreElements()) ((Group) groups.nextElement()).update();
+    }
+    
     //// Bindings ////////////////////////////////////////////////////////////
     
     private void bind (Binding binding) {
@@ -61,36 +72,36 @@ public class Coordinator {
         this.dataWires.addElement(dataWire);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, DataAccess data, TriggerAccess activator) {
-        wire(new DataWire(recipient, fieldName, data, activator));
+    protected void wire (DataRecipient recipient, DataAccess data, TriggerAccess activator) {
+        wire(new DataWire(recipient, data, activator));
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, DataAccess data) {
-        wire(recipient, fieldName, data, null);
+    protected void wire (DataRecipient recipient, DataAccess data) {
+        wire(recipient, data, null);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, TriggerAccess trigger) {
-        wire(recipient, fieldName, trigger, null);
+    protected void wire (DataRecipient recipient, TriggerAccess trigger) {
+        wire(recipient, trigger, null);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, TriggerAccess trigger, TriggerAccess activator) {
-        wire(recipient, fieldName, new DataTriggerAdaptor(trigger), activator);
+    protected void wire (DataRecipient recipient, TriggerAccess trigger, TriggerAccess activator) {
+        wire(recipient, new DataTriggerAdaptor(trigger), activator);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, double value) {
-        wire(recipient, fieldName, value, null);
+    protected void wire (DataRecipient recipient, double value) {
+        wire(recipient, value, null);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, double value, TriggerAccess activator) {
-        wire(recipient, fieldName, new ConstData(value), activator);
+    protected void wire (DataRecipient recipient, double value, TriggerAccess activator) {
+        wire(recipient, new ConstData(value), activator);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, boolean value) {
-        wire(recipient, fieldName, value, null);
+    protected void wire (DataRecipient recipient, boolean value) {
+        wire(recipient, value, null);
     }
     
-    protected void wire (DataRecipient recipient, String fieldName, boolean value, TriggerAccess activator) {
-        wire(recipient, fieldName, new ConstData(value ? 1D : 0D), activator);
+    protected void wire (DataRecipient recipient, boolean value, TriggerAccess activator) {
+        wire(recipient, new ConstData(value ? 1D : 0D), activator);
     }
     
     //// Groups ////////////////////////////////////////////////////////////////
@@ -101,18 +112,5 @@ public class Coordinator {
     
     protected void group (TriggerAccess trigger, Coordinator coordinator) {
         group(new Group(trigger, coordinator));
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////
-    
-    public void update () {
-        final Enumeration wires = this.dataWires.elements();
-        while (wires.hasMoreElements()) ConnectorProxy.pipe((DataWire) wires.nextElement());
-        
-        final Enumeration bindings = this.triggerBindings.elements();
-        while (bindings.hasMoreElements()) ConnectorProxy.pipe((Binding) bindings.nextElement());
-        
-        final Enumeration groups = this.subGroups.elements();
-        while (groups.hasMoreElements()) ((Group) groups.nextElement()).update();
     }
 }

@@ -2,7 +2,7 @@ package com._604robotics.robotnik.module;
 
 import com._604robotics.robotnik.meta.Iterator;
 import com._604robotics.robotnik.meta.Repackager;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.InternalLogger;
 import java.util.Hashtable;
 

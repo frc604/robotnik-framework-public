@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.memory;
+package com._604robotics.robotnik.network;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;

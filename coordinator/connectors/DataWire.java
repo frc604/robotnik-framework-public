@@ -6,32 +6,21 @@ import com._604robotics.robotnik.trigger.TriggerAccess;
 
 public class DataWire {
     private final DataRecipient recipient;
-    
-    private final String fieldName;
-    private final DataAccess data;
+    private final DataAccess source;
     private final TriggerAccess activator;
     
-    public DataWire (DataRecipient recipient, String fieldName, DataAccess data, TriggerAccess activator) {
+    public DataWire (DataRecipient recipient, DataAccess source, TriggerAccess activator) {
         this.recipient = recipient;
-        
-        this.fieldName = fieldName;
-        this.data = data;
+        this.source = source;
         this.activator = activator;
     }
     
     public boolean isActive () {
         return this.activator == null || this.activator.get();
     }
-
-    public DataRecipient getRecipient () {
-        return this.recipient;
-    }
-
-    public DataAccess getData () {
-        return this.data;
-    }
-
-    public String getFieldName () {
-        return this.fieldName;
+    
+    public void conduct () {
+        if (this.activator == null || this.activator.get())
+            this.recipient.write(this.source.get());
     }
 }
