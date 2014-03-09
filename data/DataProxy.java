@@ -1,12 +1,11 @@
-package com._604robotics.robotnik;
+package com._604robotics.robotnik.data;
 
-import com._604robotics.robotnik.data.DataReference;
 import com._604robotics.robotnik.logging.InternalLogger;
 
 public class DataProxy {
     private static boolean active = true;
     
-    protected static void disable () { active = false; }
+    public static void disable () { active = false; }
     
     public static void update (String moduleName, String dataName, DataReference data) {
         if (active) {

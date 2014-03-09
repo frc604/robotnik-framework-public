@@ -1,6 +1,5 @@
 package com._604robotics.robotnik.trigger;
 
-import com._604robotics.robotnik.TriggerProxy;
 import com._604robotics.robotnik.meta.Iterator;
 import com._604robotics.robotnik.meta.Repackager;
 import com._604robotics.robotnik.network.IndexedTable;

@@ -6,7 +6,7 @@ public class DataReference implements DataAccess {
     private final Data data;
     private final Slice value;
     
-    public DataReference (Data data, Slice value) {
+    protected DataReference (Data data, Slice value) {
         this.data = data;
         this.value = value;
     }
@@ -15,7 +15,7 @@ public class DataReference implements DataAccess {
         return this.value.getNumber(0D);
     }
     
-    public void update () {
+    protected void update () {
         this.value.putNumber(this.data.run());
     }
 }

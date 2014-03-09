@@ -1,5 +1,8 @@
 package com._604robotics.robotnik;
 
+import com._604robotics.robotnik.trigger.TriggerProxy;
+import com._604robotics.robotnik.data.DataProxy;
+import com._604robotics.robotnik.action.ActionProxy;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleManager;

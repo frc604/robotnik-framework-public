@@ -19,7 +19,7 @@ public class ActionReference implements TriggerRecipient {
     
     private final TriggerManual activeTrigger = new TriggerManual(false);
     
-    public ActionReference (ModuleReference module, Action action, Slice trigger, final IndexedTable dataTable) {
+    protected ActionReference (ModuleReference module, Action action, Slice trigger, final IndexedTable dataTable) {
         this.action = action;
         this.trigger = trigger;
         
@@ -36,7 +36,17 @@ public class ActionReference implements TriggerRecipient {
         while (ti.next()) ((TriggerLink) ti.value).link(module.getTrigger((String) ti.key));
     }
     
-    public void reset () {
+    public TriggerAccess active () {
+        return (TriggerAccess) this.activeTrigger;
+    }
+    
+    public DataRecipient getField (String name) {
+        final FieldReference field = (FieldReference) this.fields.get(name);
+        if (field == null) InternalLogger.missing("FieldReference", name);
+        return field;
+    }
+    
+    protected void reset () {
         this.trigger.putNumber(0D);
         
         final Iterator i = new Iterator(this.fields);
@@ -51,26 +61,16 @@ public class ActionReference implements TriggerRecipient {
         }
     }
     
-    public TriggerAccess active () {
-        return (TriggerAccess) this.activeTrigger;
-    }
-    
-    public DataRecipient getField (String name) {
-        final FieldReference field = (FieldReference) this.fields.get(name);
-        if (field == null) InternalLogger.missing("FieldReference", name);
-        return field;
-    }
-    
-    public void begin () {
+    protected void begin () {
         this.action.begin();
         this.activeTrigger.set(true);
     }
     
-    public void run () {
+    protected void run () {
         this.action.run();
     }
     
-    public void end () {
+    protected void end () {
         this.action.end();
         this.activeTrigger.set(false);
     }
