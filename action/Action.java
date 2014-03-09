@@ -26,11 +26,15 @@ public class Action {
     }
     
     protected DataAccess data (String name) {
-        return (DataLink) dataLinks.put(name, new DataLink());
+        final DataLink dataLink = new DataLink();
+        dataLinks.put(name, dataLink);
+        return dataLink; 
     }
     
     protected TriggerAccess trigger (String name) {
-        return (TriggerLink) triggerLinks.put(name, new TriggerLink());
+        final TriggerLink triggerLink = new TriggerLink();
+        triggerLinks.put(name, triggerLink);
+        return triggerLink;
     }
     
     protected Iterator iterateFields () {
