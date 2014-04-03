@@ -6,8 +6,6 @@ import com._604robotics.robotnik.coordinator.connectors.DataWire;
 import com._604robotics.robotnik.coordinator.connectors.Group;
 import com._604robotics.robotnik.data.DataSource;
 import com._604robotics.robotnik.data.DataSink;
-import com._604robotics.robotnik.data.sources.ConstData;
-import com._604robotics.robotnik.data.sources.DataTriggerAdaptor;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.trigger.TriggerSource;
 import com._604robotics.robotnik.trigger.TriggerSink;
@@ -16,10 +14,34 @@ import java.util.Vector;
 
 public class Coordinator {
     private static final TriggerSource ALWAYS_ON = new TriggerSource() {
-        public boolean get() {
+        public boolean get () {
             return true;
         }
     };
+    
+    private static class FixedValue implements DataSource {
+        private final double value;
+
+        public FixedValue (double value) {
+            this.value = value;
+        }
+
+        public double get () {
+            return value;
+        }
+    }
+    
+    private static class TriggerWrapper implements DataSource {
+        private final TriggerSource trigger;
+
+        public TriggerWrapper (TriggerSource trigger) {
+            this.trigger = trigger;
+        }
+
+        public double get () {
+            return this.trigger.get() ? 1D : 0D;
+        }
+    }
     
     private final Vector triggerBindings = new Vector();
     private final Vector dataWires = new Vector();
@@ -90,7 +112,7 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, TriggerSource trigger, TriggerSource activator) {
-        wire(recipient, new DataTriggerAdaptor(trigger), activator);
+        wire(recipient, new TriggerWrapper(trigger), activator);
     }
     
     protected void wire (DataSink recipient, double value) {
@@ -98,7 +120,7 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, double value, TriggerSource activator) {
-        wire(recipient, new ConstData(value), activator);
+        wire(recipient, new FixedValue(value), activator);
     }
     
     protected void wire (DataSink recipient, boolean value) {
@@ -106,7 +128,7 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, boolean value, TriggerSource activator) {
-        wire(recipient, new ConstData(value ? 1D : 0D), activator);
+        wire(recipient, new FixedValue(value ? 1D : 0D), activator);
     }
     
     //// Groups ////////////////////////////////////////////////////////////////
