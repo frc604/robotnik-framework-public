@@ -9,13 +9,18 @@ import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.data.sources.ConstData;
 import com._604robotics.robotnik.data.sources.DataTriggerAdaptor;
 import com._604robotics.robotnik.module.ModuleManager;
-import com._604robotics.robotnik.prefabs.trigger.TriggerAlways;
 import com._604robotics.robotnik.trigger.TriggerSource;
 import com._604robotics.robotnik.trigger.TriggerSink;
 import java.util.Enumeration;
 import java.util.Vector;
 
 public class Coordinator {
+    private static final TriggerSource ALWAYS_ON = new TriggerSource() {
+        public boolean get() {
+            return true;
+        }
+    };
+    
     private final Vector triggerBindings = new Vector();
     private final Vector dataWires = new Vector();
     private final Vector subGroups = new Vector();
@@ -55,11 +60,11 @@ public class Coordinator {
     }
     
     protected void bind (TriggerSink recipient) {
-        bind(recipient, TriggerAlways.getInstance(), Binding.Precedence.MINIMUM);
+        bind(recipient, ALWAYS_ON, Binding.Precedence.MINIMUM);
     }
     
     protected void bind (TriggerSink recipient, int precedence) {
-        bind(recipient, TriggerAlways.getInstance(), precedence);
+        bind(recipient, ALWAYS_ON, precedence);
     }
     
     protected void bind (TriggerSink recipient, TriggerSource trigger) {
@@ -77,11 +82,11 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, DataSource data) {
-        wire(recipient, data, null);
+        wire(recipient, data, ALWAYS_ON);
     }
     
     protected void wire (DataSink recipient, TriggerSource trigger) {
-        wire(recipient, trigger, null);
+        wire(recipient, trigger, ALWAYS_ON);
     }
     
     protected void wire (DataSink recipient, TriggerSource trigger, TriggerSource activator) {
@@ -89,7 +94,7 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, double value) {
-        wire(recipient, value, null);
+        wire(recipient, value, ALWAYS_ON);
     }
     
     protected void wire (DataSink recipient, double value, TriggerSource activator) {
@@ -97,7 +102,7 @@ public class Coordinator {
     }
     
     protected void wire (DataSink recipient, boolean value) {
-        wire(recipient, value, null);
+        wire(recipient, value, ALWAYS_ON);
     }
     
     protected void wire (DataSink recipient, boolean value, TriggerSource activator) {
@@ -106,11 +111,11 @@ public class Coordinator {
     
     //// Groups ////////////////////////////////////////////////////////////////
     
-    private void group (Group group) {
-        this.subGroups.addElement(group);
+    protected void group (TriggerSource trigger, Coordinator coordinator) {
+        this.subGroups.addElement(new Group(trigger, coordinator));
     }
     
-    protected void group (TriggerSource trigger, Coordinator coordinator) {
-        group(new Group(trigger, coordinator));
+    protected void group (Coordinator coordinator) {
+        group(ALWAYS_ON, coordinator);
     }
 }

@@ -16,7 +16,7 @@ public class DataWire {
     }
     
     protected void conduct () {
-        if (this.activator == null || this.activator.get())
+        if (this.activator.get())
             this.sink.write(this.source.get());
     }
 }
