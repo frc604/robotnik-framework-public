@@ -8,12 +8,10 @@ import java.util.Hashtable;
 
 public class DataManager {
     private final String moduleName;
-    
     private final Hashtable dataTable;
     
     public DataManager (String moduleName, DataMap dataMap, final IndexedTable table) {
         this.moduleName = moduleName;
-        
         this.dataTable = Repackager.repackage(dataMap.iterate(), new Repackager() {
            public Object wrap (Object key, Object value) {
                return new DataReference((Data) value, table.getSlice((String) key));

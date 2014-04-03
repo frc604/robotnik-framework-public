@@ -8,12 +8,10 @@ import java.util.Hashtable;
 
 public class TriggerManager {
     private final String moduleName;
-    
     private final Hashtable triggerTable;
     
     public TriggerManager (String moduleName, TriggerMap triggerMap, final IndexedTable table) {
         this.moduleName = moduleName;
-        
         this.triggerTable = Repackager.repackage(triggerMap.iterate(), new Repackager() {
            public Object wrap (Object key, Object value) {
                return new TriggerReference((Trigger) value, table.getSlice((String) key));
