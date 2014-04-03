@@ -1,12 +1,13 @@
 package com._604robotics.robotnik.action.controllers;
 
 import com._604robotics.robotnik.action.ActionController;
+import com._604robotics.robotnik.action.ActionReference;
 
 public class StateController extends ActionController {
-    protected String pickAction (String lastAction, String triggeredAction) {
-        return triggeredAction.equals("")
-                   ? lastAction.equals("")
-                       ? this.getDefaultAction()
+    protected ActionReference pickAction (ActionReference defaultAction, ActionReference lastAction, ActionReference triggeredAction) {
+        return triggeredAction == null
+                   ? lastAction == null
+                       ? defaultAction
                        : lastAction
                    : triggeredAction;
     }

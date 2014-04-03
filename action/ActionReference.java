@@ -12,6 +12,8 @@ import com._604robotics.robotnik.trigger.TriggerSink;
 import java.util.Hashtable;
 
 public class ActionReference implements TriggerSink {
+    private final String name;
+    
     private final Action action;
     private final Hashtable fields;
     
@@ -20,7 +22,8 @@ public class ActionReference implements TriggerSink {
     
     private final TriggerManual activeTrigger = new TriggerManual(false);
     
-    protected ActionReference (ModuleReference module, Action action, final IndexedTable dataTable) {
+    protected ActionReference (ModuleReference module, String name, Action action, final IndexedTable dataTable) {
+        this.name = name;
         this.action = action;
         
         this.fields = Repackager.repackage(action.iterateFields(), new Repackager() {
@@ -50,6 +53,10 @@ public class ActionReference implements TriggerSink {
         this.triggered = value;
         if (this.precedence > precedence)
             this.precedence = precedence;
+    }
+    
+    protected String getName () {
+        return name;
     }
     
     protected boolean isTriggered () {

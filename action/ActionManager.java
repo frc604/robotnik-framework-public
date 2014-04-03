@@ -13,10 +13,12 @@ public class ActionManager {
     private final String moduleName;
     
     private final ActionController controller;
-    private final Hashtable actionTable;
     
-    private String triggeredAction = "";
-    private String lastAction = "";
+    private final Hashtable actionTable;
+    private final ActionReference defaultAction;
+    
+    private ActionReference triggeredAction = null;
+    private ActionReference lastAction = null;
     
     private final Slice triggeredActionSlice;
     private final Slice lastActionSlice;
@@ -34,9 +36,12 @@ public class ActionManager {
         
         this.actionTable = Repackager.repackage(controller.iterateActions(), new Repackager() {
            public Object wrap (Object key, Object value) {
-               return new ActionReference(module, (Action) value, dataTable);
+               return new ActionReference(module, (String) key, (Action) value, dataTable.getSubTable((String) key));
            }
         });
+        this.defaultAction = controller.getDefaultAction() != null
+                           ? (ActionReference) actionTable.get(controller.getDefaultAction())
+                           : null;
     }
     
     public ActionReference getAction (String name) {
@@ -56,34 +61,38 @@ public class ActionManager {
         
         while (i.next()) {
             if (((ActionReference) i.value).isTriggered())
-                r.consider(i.key, ((ActionReference) i.value).getPrecedence());
+                r.consider(i.value, ((ActionReference) i.value).getPrecedence());
         }
         
-        triggeredAction = r.score > 0 ? (String) r.victor : "";
-        triggeredActionSlice.putString(triggeredAction);
+        triggeredAction = r.score > 0 ? (ActionReference) r.victor : null;
+        triggeredActionSlice.putString(triggeredAction.getName());
     }
     
     public void execute () {
-        final String selectedAction = controller.pickAction(lastAction, triggeredAction);
+        final ActionReference selectedAction = controller.pickAction(defaultAction, lastAction, triggeredAction);
         
-        if (!lastAction.equals("") && !lastAction.equals(selectedAction))
-            ActionProxy.end(moduleName, lastAction, this.getAction(lastAction));
+        if (lastAction != null && lastAction != selectedAction)
+            ActionProxy.end(moduleName, lastAction);
 
-        if (!selectedAction.equals("")) {
-            final ActionReference action = this.getAction(selectedAction);
+        if (selectedAction != null) {
+            if (lastAction == null || lastAction != selectedAction)
+                ActionProxy.begin(moduleName, selectedAction);
             
-            if (lastAction.equals("") || !lastAction.equals(selectedAction))
-                ActionProxy.begin(moduleName, selectedAction, action);
-            
-            ActionProxy.run(moduleName, selectedAction, action);
+            ActionProxy.run(moduleName, selectedAction);
         }
         
-        lastActionSlice.putString(selectedAction);
+        lastAction = selectedAction;
+        lastActionSlice.putString(selectedAction.getName());
     }
     
     public void end () {
-        if (!lastAction.equals(""))
-            ActionProxy.end(moduleName, lastAction, this.getAction(lastAction));
+        if (lastAction != null)
+            ActionProxy.end(moduleName, lastAction);
+        
+        triggeredAction = null;
+        lastAction = null;
+        
+        triggeredActionSlice.putString("");
         lastActionSlice.putString("");
     }
 }

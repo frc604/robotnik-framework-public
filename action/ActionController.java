@@ -5,9 +5,9 @@ import java.util.Hashtable;
 
 public abstract class ActionController {
     private final Hashtable actionTable = new Hashtable();
-    private String defaultAction = "";
+    private String defaultAction = null;
     
-    protected abstract String pickAction (String lastAction, String triggeredAction);
+    protected abstract ActionReference pickAction (ActionReference defaultAction, ActionReference lastAction, ActionReference triggeredAction);
     
     public void add (String name, Action action) {
         this.actionTable.put(name, action);
@@ -28,10 +28,6 @@ public abstract class ActionController {
     
     protected String getDefaultAction () {
         return this.defaultAction;
-    }
-    
-    protected Action getAction (String name) {
-        return (Action) this.actionTable.get(name);
     }
     
     protected Iterator iterateActions () {
