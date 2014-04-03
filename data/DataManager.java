@@ -19,7 +19,7 @@ public class DataManager {
         });
     }
     
-    public DataReference getData (String name) {
+    public DataSource getData (String name) {
         final DataReference ref = (DataReference) this.dataTable.get(name);
         if (ref == null) InternalLogger.missing("DataReference", name);
         return ref;

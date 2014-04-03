@@ -19,7 +19,7 @@ public class TriggerManager {
         });
     }
     
-    public TriggerReference getTrigger (String name) {
+    public TriggerSource getTrigger (String name) {
         TriggerReference ref = (TriggerReference) this.triggerTable.get(name);
         if (ref == null) InternalLogger.missing("TriggerReference", name);
         return ref;

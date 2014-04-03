@@ -3,10 +3,10 @@ package com._604robotics.robotnik.module;
 import com._604robotics.robotnik.action.ActionManager;
 import com._604robotics.robotnik.action.ActionReference;
 import com._604robotics.robotnik.data.DataManager;
-import com._604robotics.robotnik.data.DataReference;
+import com._604robotics.robotnik.data.DataSource;
 import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.trigger.TriggerManager;
-import com._604robotics.robotnik.trigger.TriggerReference;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
 public class ModuleReference {
     private final Module module;
@@ -25,11 +25,11 @@ public class ModuleReference {
         this.module = module;
     }
     
-    public DataReference getData (String name) {
+    public DataSource getData (String name) {
         return this.dataManager.getData(name);
     }
     
-    public TriggerReference getTrigger (String name) {
+    public TriggerSource getTrigger (String name) {
         return this.triggerManager.getTrigger(name);
     }
     
