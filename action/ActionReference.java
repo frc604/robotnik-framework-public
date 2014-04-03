@@ -1,27 +1,27 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.data.DataRecipient;
+import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.logging.InternalLogger;
 import com._604robotics.robotnik.network.IndexedTable;
-import com._604robotics.robotnik.network.Slice;
 import com._604robotics.robotnik.meta.Iterator;
 import com._604robotics.robotnik.meta.Repackager;
 import com._604robotics.robotnik.module.ModuleReference;
 import com._604robotics.robotnik.prefabs.trigger.TriggerManual;
-import com._604robotics.robotnik.trigger.TriggerAccess;
-import com._604robotics.robotnik.trigger.TriggerRecipient;
+import com._604robotics.robotnik.trigger.TriggerSource;
+import com._604robotics.robotnik.trigger.TriggerSink;
 import java.util.Hashtable;
 
-public class ActionReference implements TriggerRecipient {
+public class ActionReference implements TriggerSink {
     private final Action action;
-    private final Slice trigger;
     private final Hashtable fields;
+    
+    private boolean triggered = false;
+    private int precedence;
     
     private final TriggerManual activeTrigger = new TriggerManual(false);
     
-    protected ActionReference (ModuleReference module, Action action, Slice trigger, final IndexedTable dataTable) {
+    protected ActionReference (ModuleReference module, Action action, final IndexedTable dataTable) {
         this.action = action;
-        this.trigger = trigger;
         
         this.fields = Repackager.repackage(action.iterateFields(), new Repackager() {
             public Object wrap (Object key, Object value) {
@@ -36,29 +36,33 @@ public class ActionReference implements TriggerRecipient {
         while (ti.next()) ((TriggerLink) ti.value).link(module.getTrigger((String) ti.key));
     }
     
-    public TriggerAccess active () {
-        return (TriggerAccess) this.activeTrigger;
+    public TriggerSource active () {
+        return (TriggerSource) this.activeTrigger;
     }
     
-    public DataRecipient getField (String name) {
+    public DataSink getField (String name) {
         final FieldReference field = (FieldReference) this.fields.get(name);
         if (field == null) InternalLogger.missing("FieldReference", name);
         return field;
     }
     
-    protected void reset () {
-        this.trigger.putNumber(0D);
-        
-        final Iterator i = new Iterator(this.fields);
-        while (i.next()) ((FieldReference) i.value).reset();
+    public void write (boolean value, int precedence) {
+        this.triggered = value;
+        if (this.precedence > precedence)
+            this.precedence = precedence;
     }
     
-    public void sendTrigger (double precedence) {
-        final double current = this.trigger.getNumber(0D);
-        
-        if (precedence > current) {
-            this.trigger.putNumber(precedence);
-        }
+    protected boolean isTriggered () {
+        return triggered;
+    }
+    
+    protected int getPrecedence () {
+        return precedence;
+    }
+    
+    protected void reset () {
+        final Iterator i = new Iterator(this.fields);
+        while (i.next()) ((FieldReference) i.value).reset();
     }
     
     protected void begin () {

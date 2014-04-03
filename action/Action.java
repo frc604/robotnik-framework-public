@@ -1,8 +1,8 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.data.DataAccess;
+import com._604robotics.robotnik.data.DataSource;
 import com._604robotics.robotnik.meta.Iterator;
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 import java.util.Hashtable;
 
 public class Action {
@@ -25,13 +25,13 @@ public class Action {
         return field(name, defaultValue ? 1 : 0);
     }
     
-    protected DataAccess data (String name) {
+    protected DataSource data (String name) {
         final DataLink dataLink = new DataLink();
         dataLinks.put(name, dataLink);
         return dataLink; 
     }
     
-    protected TriggerAccess trigger (String name) {
+    protected TriggerSource trigger (String name) {
         final TriggerLink triggerLink = new TriggerLink();
         triggerLinks.put(name, triggerLink);
         return triggerLink;

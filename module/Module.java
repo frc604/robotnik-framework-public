@@ -11,7 +11,8 @@ public abstract class Module {
     
     private ActionController actionController = new DummyController();
     
-    protected void start () {}
+    protected void begin () {}
+    protected void run () {}
     protected void end () {}
     
     protected void set (DataMap dataMap) {

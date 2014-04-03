@@ -1,9 +1,9 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.data.DataRecipient;
+import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.network.Slice;
 
-public class FieldReference implements DataRecipient {
+public class FieldReference implements DataSink {
     private final Field field;
     private final Slice slice;
 

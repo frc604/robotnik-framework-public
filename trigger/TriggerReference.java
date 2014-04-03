@@ -3,18 +3,18 @@ package com._604robotics.robotnik.trigger;
 import com._604robotics.robotnik.network.Slice;
 import com._604robotics.robotnik.prefabs.trigger.TriggerNot;
 
-public class TriggerReference implements TriggerAccess {
+public class TriggerReference implements TriggerSource {
     private final Trigger trigger;
     private final Slice value;
     
-    private TriggerAccess inverse = null;
+    private TriggerSource inverse = null;
     
     public TriggerReference (Trigger trigger, Slice value) {
         this.trigger = trigger;
         this.value = value;
     }
     
-    public TriggerAccess not () {
+    public TriggerSource not () {
         if (this.inverse == null) {
             this.inverse = new TriggerNot(this);
         }

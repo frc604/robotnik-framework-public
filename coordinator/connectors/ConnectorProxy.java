@@ -1,23 +1,21 @@
-package com._604robotics.robotnik;
+package com._604robotics.robotnik.coordinator.connectors;
 
-import com._604robotics.robotnik.coordinator.connectors.Binding;
-import com._604robotics.robotnik.coordinator.connectors.DataWire;
 import com._604robotics.robotnik.logging.Logger;
 
 public class ConnectorProxy {
     private static boolean active = true;
     
-    protected static void disable () { active = false; }
+    public static void disable () { active = false; }
     
     public static void pipe (Binding binding) {
         if (active) {
             try {
-                conduct(binding);
+                binding.conduct();
             } catch (Exception ex) {
                 Logger.error("Caught error while piping a Binding", ex);
             }
         } else {
-            conduct(binding);
+            binding.conduct();
         }
     }
     
@@ -30,12 +28,6 @@ public class ConnectorProxy {
             }
         } else {
             wire.conduct();
-        }
-    }
-    
-    private static void conduct(Binding binding) {
-        if (binding.getTrigger().get()) {
-            binding.getRecipient().sendTrigger(binding.isSafety() ? 2D : 1D);
         }
     }
 }

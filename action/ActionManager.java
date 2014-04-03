@@ -6,32 +6,35 @@ import com._604robotics.robotnik.meta.Scorekeeper;
 import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.InternalLogger;
 import com._604robotics.robotnik.module.ModuleReference;
+import com._604robotics.robotnik.network.Slice;
 import java.util.Hashtable;
 
 public class ActionManager {
     private final String moduleName;
     
     private final ActionController controller;
-    
-    private final IndexedTable triggerTable;
-    private final IndexedTable statusTable;
     private final Hashtable actionTable;
     
-    public ActionManager (final ModuleReference module, String moduleName, ActionController controller, final IndexedTable table) {
+    private String triggeredAction = "";
+    private String lastAction = "";
+    
+    private final Slice triggeredActionSlice;
+    private final Slice lastActionSlice;
+    
+    public ActionManager (final ModuleReference module, String moduleName, ActionController controller, IndexedTable statusTable, final IndexedTable dataTable) {
         this.moduleName = moduleName;
         
         this.controller = controller;
         
-        this.triggerTable = table.getSubTable("triggers");
+        this.triggeredActionSlice = statusTable.getSlice("triggeredAction");
+        this.lastActionSlice = statusTable.getSlice("lastAction");
         
-        this.statusTable = table.getSubTable("status");
-        this.statusTable.putString("triggeredAction", "");
-        this.statusTable.putString("lastAction", "");
+        this.triggeredActionSlice.putString("");
+        this.lastActionSlice.putString("");
         
-        final IndexedTable dataTable = table.getSubTable("data");
-        this.actionTable = Repackager.repackage(controller.iterate(), new Repackager() {
+        this.actionTable = Repackager.repackage(controller.iterateActions(), new Repackager() {
            public Object wrap (Object key, Object value) {
-               return new ActionReference(module, (Action) value, triggerTable.getSlice((String) key), dataTable.getSubTable((String) key));
+               return new ActionReference(module, (Action) value, dataTable);
            }
         });
     }
@@ -48,44 +51,39 @@ public class ActionManager {
     }
     
     public void update () {
-        final Scorekeeper r = new Scorekeeper(0D);
-        final Iterator i = controller.iterate();
+        final Scorekeeper r = new Scorekeeper(0);
+        final Iterator i = new Iterator(actionTable);
         
-        while (i.next()) r.consider(i.key, this.triggerTable.getNumber((String) i.key, 0D));
+        while (i.next()) {
+            if (((ActionReference) i.value).isTriggered())
+                r.consider(i.key, ((ActionReference) i.value).getPrecedence());
+        }
         
-        this.statusTable.putString("triggeredAction", r.score > 0 ? (String) r.victor : "");
+        triggeredAction = r.score > 0 ? (String) r.victor : "";
+        triggeredActionSlice.putString(triggeredAction);
     }
     
     public void execute () {
-        final String triggeredAction = this.statusTable.getString("triggeredAction", "");
-        final String lastAction = this.statusTable.getString("lastAction", "");
+        final String selectedAction = controller.pickAction(lastAction, triggeredAction);
         
-        final String selectedAction = this.controller.pickAction(lastAction, triggeredAction);
-        
-        if (!lastAction.equals("") && !lastAction.equals(selectedAction)) {
+        if (!lastAction.equals("") && !lastAction.equals(selectedAction))
             ActionProxy.end(moduleName, lastAction, this.getAction(lastAction));
-        }
 
         if (!selectedAction.equals("")) {
             final ActionReference action = this.getAction(selectedAction);
             
-            if (lastAction.equals("") || !lastAction.equals(selectedAction)) {
+            if (lastAction.equals("") || !lastAction.equals(selectedAction))
                 ActionProxy.begin(moduleName, selectedAction, action);
-            }
             
             ActionProxy.run(moduleName, selectedAction, action);
         }
         
-        this.statusTable.putString("lastAction", selectedAction);
+        lastActionSlice.putString(selectedAction);
     }
     
     public void end () {
-        final String lastAction = this.statusTable.getString("lastAction", "");
-        
-        if (!lastAction.equals("")) {
+        if (!lastAction.equals(""))
             ActionProxy.end(moduleName, lastAction, this.getAction(lastAction));
-        }
-        
-        this.statusTable.putString("lastAction", "");
+        lastActionSlice.putString("");
     }
 }

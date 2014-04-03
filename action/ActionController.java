@@ -34,7 +34,7 @@ public abstract class ActionController {
         return (Action) this.actionTable.get(name);
     }
     
-    protected Iterator iterate () {
+    protected Iterator iterateActions () {
         return new Iterator(this.actionTable);
     }
 }

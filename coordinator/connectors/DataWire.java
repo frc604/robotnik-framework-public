@@ -1,26 +1,22 @@
 package com._604robotics.robotnik.coordinator.connectors;
 
-import com._604robotics.robotnik.data.DataAccess;
-import com._604robotics.robotnik.data.DataRecipient;
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.data.DataSource;
+import com._604robotics.robotnik.data.DataSink;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
 public class DataWire {
-    private final DataRecipient recipient;
-    private final DataAccess source;
-    private final TriggerAccess activator;
+    private final DataSink sink;
+    private final DataSource source;
+    private final TriggerSource activator;
     
-    public DataWire (DataRecipient recipient, DataAccess source, TriggerAccess activator) {
-        this.recipient = recipient;
+    public DataWire (DataSink sink, DataSource source, TriggerSource activator) {
+        this.sink = sink;
         this.source = source;
         this.activator = activator;
     }
     
-    public boolean isActive () {
-        return this.activator == null || this.activator.get();
-    }
-    
-    public void conduct () {
+    protected void conduct () {
         if (this.activator == null || this.activator.get())
-            this.recipient.write(this.source.get());
+            this.sink.write(this.source.get());
     }
 }

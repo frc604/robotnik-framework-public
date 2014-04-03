@@ -1,9 +1,9 @@
 package com._604robotics.robotnik.prefabs.controller;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class ControllerButton implements TriggerAccess {
+public class ControllerButton implements TriggerSource {
     private final Joystick joystick;
     private final int button;
     

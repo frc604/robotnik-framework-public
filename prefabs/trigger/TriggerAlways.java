@@ -1,12 +1,12 @@
 package com._604robotics.robotnik.prefabs.trigger;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
-public class TriggerAlways implements TriggerAccess {
+public class TriggerAlways implements TriggerSource {
     private TriggerAlways () {}
-    private static final TriggerAccess instance = new TriggerAlways();
+    private static final TriggerSource instance = new TriggerAlways();
     
-    public static TriggerAccess getInstance () {
+    public static TriggerSource getInstance () {
         return instance;
     }
     

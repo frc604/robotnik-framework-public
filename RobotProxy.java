@@ -31,8 +31,8 @@ public class RobotProxy {
         modules.execute();
     }
     
-    public static void start (ModuleManager modules) {
-        modules.start();
+    public static void begin (ModuleManager modules) {
+        modules.begin();
     }
     
     public static void update (ModuleManager modules) {

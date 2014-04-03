@@ -1,12 +1,12 @@
 package com._604robotics.robotnik.prefabs.sinks;
 
-import com._604robotics.robotnik.data.DataRecipient;
+import com._604robotics.robotnik.data.DataSink;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardSink {
     private DashboardSink () {}
     
-    public static class Number implements DataRecipient {
+    public static class Number implements DataSink {
         private final String name;
 
         public Number (String name) {
@@ -18,7 +18,7 @@ public class DashboardSink {
         }
     }
     
-    public static class Boolean implements DataRecipient {
+    public static class Boolean implements DataSink {
         private final String name;
 
         public Boolean (String name) {

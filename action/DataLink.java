@@ -1,13 +1,13 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.data.DataAccess;
+import com._604robotics.robotnik.data.DataSource;
 
-public class DataLink implements DataAccess {
-    private DataAccess source = null;
+public class DataLink implements DataSource {
+    private DataSource source = null;
     
     protected DataLink () {}
     
-    protected void link (DataAccess source) {
+    protected void link (DataSource source) {
         this.source = source;
     }
 

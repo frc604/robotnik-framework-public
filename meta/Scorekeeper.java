@@ -4,14 +4,14 @@ public class Scorekeeper {
     public Object victor = null;
     public int count = 0;
     
-    private final double base;
-    public double score;
+    private final int base;
+    public int score;
     
-    public Scorekeeper (double base) {
+    public Scorekeeper (int base) {
         this.base = this.score = base;
     }
     
-    public void consider (Object item, double score) {
+    public void consider (Object item, int score) {
         if (this.victor == null || score > this.score) {
             this.victor = item;
             this.score = score;

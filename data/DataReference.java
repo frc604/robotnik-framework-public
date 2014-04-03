@@ -2,7 +2,7 @@ package com._604robotics.robotnik.data;
 
 import com._604robotics.robotnik.network.Slice;
 
-public class DataReference implements DataAccess {
+public class DataReference implements DataSource {
     private final Data data;
     private final Slice value;
     

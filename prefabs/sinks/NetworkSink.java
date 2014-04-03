@@ -1,6 +1,6 @@
 package com._604robotics.robotnik.prefabs.sinks;
 
-import com._604robotics.robotnik.data.DataRecipient;
+import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.network.Slice;
 import com.sun.squawk.util.StringTokenizer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 public class NetworkSink {
     private NetworkSink () {}
     
-    public static class Number implements DataRecipient {
+    public static class Number implements DataSink {
         private final Slice slice;
         
         public Number (String namespace, String field) {
@@ -27,7 +27,7 @@ public class NetworkSink {
         }
     }
     
-    public static class Boolean implements DataRecipient {
+    public static class Boolean implements DataSink {
         private final Slice slice;
         
         public Boolean (String namespace, String field) {

@@ -1,13 +1,13 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
-public class TriggerLink implements TriggerAccess {
-    private TriggerAccess source = null;
+public class TriggerLink implements TriggerSource {
+    private TriggerSource source = null;
     
     protected TriggerLink () {}
     
-    protected void link (TriggerAccess source) {
+    protected void link (TriggerSource source) {
         this.source = source;
     }
 

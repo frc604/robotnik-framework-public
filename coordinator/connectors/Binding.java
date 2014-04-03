@@ -1,31 +1,22 @@
 package com._604robotics.robotnik.coordinator.connectors;
 
-import com._604robotics.robotnik.prefabs.trigger.TriggerAlways;
-import com._604robotics.robotnik.trigger.TriggerAccess;
-import com._604robotics.robotnik.trigger.TriggerRecipient;
+import com._604robotics.robotnik.trigger.TriggerSource;
+import com._604robotics.robotnik.trigger.TriggerSink;
 
 public class Binding {
-    private final TriggerRecipient recipient;
-    private final TriggerAccess trigger;
+    public static int OVERRIDE_ALL = Integer.MAX_VALUE;
     
-    private final boolean safety;
+    private final TriggerSink sink;
+    private final TriggerSource trigger;
+    private final int precedence;
     
-    public Binding (TriggerRecipient recipient, TriggerAccess trigger, boolean safety) {
-        this.recipient = recipient;
+    public Binding (TriggerSink sink, TriggerSource trigger, int precedence) {
+        this.sink = sink;
         this.trigger = trigger;
-        
-        this.safety = safety;
+        this.precedence = precedence;
     }
 
-    public TriggerRecipient getRecipient () {
-        return this.recipient;
-    }
-
-    public TriggerAccess getTrigger () {
-        return this.trigger;
-    }
-
-    public boolean isSafety () {
-        return this.safety;
+    protected void conduct () {
+        sink.write(trigger.get(), precedence);
     }
 }

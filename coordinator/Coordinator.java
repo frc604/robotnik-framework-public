@@ -1,17 +1,17 @@
 package com._604robotics.robotnik.coordinator;
 
-import com._604robotics.robotnik.ConnectorProxy;
+import com._604robotics.robotnik.coordinator.connectors.ConnectorProxy;
 import com._604robotics.robotnik.coordinator.connectors.Binding;
 import com._604robotics.robotnik.coordinator.connectors.DataWire;
 import com._604robotics.robotnik.coordinator.connectors.Group;
-import com._604robotics.robotnik.data.DataAccess;
-import com._604robotics.robotnik.data.DataRecipient;
+import com._604robotics.robotnik.data.DataSource;
+import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.data.sources.ConstData;
 import com._604robotics.robotnik.data.sources.DataTriggerAdaptor;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.prefabs.trigger.TriggerAlways;
-import com._604robotics.robotnik.trigger.TriggerAccess;
-import com._604robotics.robotnik.trigger.TriggerRecipient;
+import com._604robotics.robotnik.trigger.TriggerSource;
+import com._604robotics.robotnik.trigger.TriggerSink;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -50,20 +50,20 @@ public class Coordinator {
         this.triggerBindings.addElement(binding);
     }
     
-    protected void bind (TriggerRecipient recipient, TriggerAccess trigger, boolean safety) {
-        bind(new Binding(recipient, trigger, safety));
+    protected void bind (TriggerSink recipient, TriggerSource trigger, int precedence) {
+        bind(new Binding(recipient, trigger, precedence));
     }
     
-    protected void bind (TriggerRecipient recipient) {
-        bind(recipient, TriggerAlways.getInstance(), false);
+    protected void bind (TriggerSink recipient) {
+        bind(recipient, TriggerAlways.getInstance(), 0);
     }
     
-    protected void bind (TriggerRecipient recipient, boolean safety) {
-        bind(recipient, TriggerAlways.getInstance(), safety);
+    protected void bind (TriggerSink recipient, int precedence) {
+        bind(recipient, TriggerAlways.getInstance(), precedence);
     }
     
-    protected void bind (TriggerRecipient recipient, TriggerAccess trigger) {
-        bind(recipient, trigger, false);
+    protected void bind (TriggerSink recipient, TriggerSource trigger) {
+        bind(recipient, trigger, 0);
     }
     
     //// DataWires /////////////////////////////////////////////////////////////
@@ -72,35 +72,35 @@ public class Coordinator {
         this.dataWires.addElement(dataWire);
     }
     
-    protected void wire (DataRecipient recipient, DataAccess data, TriggerAccess activator) {
+    protected void wire (DataSink recipient, DataSource data, TriggerSource activator) {
         wire(new DataWire(recipient, data, activator));
     }
     
-    protected void wire (DataRecipient recipient, DataAccess data) {
+    protected void wire (DataSink recipient, DataSource data) {
         wire(recipient, data, null);
     }
     
-    protected void wire (DataRecipient recipient, TriggerAccess trigger) {
+    protected void wire (DataSink recipient, TriggerSource trigger) {
         wire(recipient, trigger, null);
     }
     
-    protected void wire (DataRecipient recipient, TriggerAccess trigger, TriggerAccess activator) {
+    protected void wire (DataSink recipient, TriggerSource trigger, TriggerSource activator) {
         wire(recipient, new DataTriggerAdaptor(trigger), activator);
     }
     
-    protected void wire (DataRecipient recipient, double value) {
+    protected void wire (DataSink recipient, double value) {
         wire(recipient, value, null);
     }
     
-    protected void wire (DataRecipient recipient, double value, TriggerAccess activator) {
+    protected void wire (DataSink recipient, double value, TriggerSource activator) {
         wire(recipient, new ConstData(value), activator);
     }
     
-    protected void wire (DataRecipient recipient, boolean value) {
+    protected void wire (DataSink recipient, boolean value) {
         wire(recipient, value, null);
     }
     
-    protected void wire (DataRecipient recipient, boolean value, TriggerAccess activator) {
+    protected void wire (DataSink recipient, boolean value, TriggerSource activator) {
         wire(recipient, new ConstData(value ? 1D : 0D), activator);
     }
     
@@ -110,7 +110,7 @@ public class Coordinator {
         this.subGroups.addElement(group);
     }
     
-    protected void group (TriggerAccess trigger, Coordinator coordinator) {
+    protected void group (TriggerSource trigger, Coordinator coordinator) {
         group(new Group(trigger, coordinator));
     }
 }
