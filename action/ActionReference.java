@@ -1,5 +1,6 @@
 package com._604robotics.robotnik.action;
 
+import com._604robotics.robotnik.coordinator.connectors.Binding;
 import com._604robotics.robotnik.data.DataSink;
 import com._604robotics.robotnik.logging.InternalLogger;
 import com._604robotics.robotnik.network.IndexedTable;
@@ -17,7 +18,7 @@ public class ActionReference implements TriggerSink {
     private final Action action;
     private final Hashtable fields;
     
-    private boolean triggered = false;
+    private boolean triggered;
     private int precedence;
     
     private final TriggerManual activeTrigger = new TriggerManual(false);
@@ -49,10 +50,12 @@ public class ActionReference implements TriggerSink {
         return field;
     }
     
-    public void write (boolean value, int precedence) {
-        this.triggered = value;
-        if (this.precedence > precedence)
-            this.precedence = precedence;
+    public void write (boolean triggered, int precedence) {
+        if (triggered) {
+            this.triggered = true;
+            if (this.precedence > precedence)
+                this.precedence = precedence;
+        }
     }
     
     protected String getName () {
@@ -68,6 +71,9 @@ public class ActionReference implements TriggerSink {
     }
     
     protected void reset () {
+        triggered = false;
+        precedence = Binding.Precedence.MINIMUM;
+        
         final Iterator i = new Iterator(this.fields);
         while (i.next()) ((FieldReference) i.value).reset();
     }

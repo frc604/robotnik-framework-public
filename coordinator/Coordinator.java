@@ -55,7 +55,7 @@ public class Coordinator {
     }
     
     protected void bind (TriggerSink recipient) {
-        bind(recipient, TriggerAlways.getInstance(), 0);
+        bind(recipient, TriggerAlways.getInstance(), Binding.Precedence.MINIMUM);
     }
     
     protected void bind (TriggerSink recipient, int precedence) {
@@ -63,7 +63,7 @@ public class Coordinator {
     }
     
     protected void bind (TriggerSink recipient, TriggerSource trigger) {
-        bind(recipient, trigger, 0);
+        bind(recipient, trigger, Binding.Precedence.MINIMUM);
     }
     
     //// DataWires /////////////////////////////////////////////////////////////

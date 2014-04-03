@@ -4,7 +4,10 @@ import com._604robotics.robotnik.trigger.TriggerSource;
 import com._604robotics.robotnik.trigger.TriggerSink;
 
 public class Binding {
-    public static int OVERRIDE_ALL = Integer.MAX_VALUE;
+    public static interface Precedence {
+        public static int MINIMUM = Integer.MIN_VALUE;
+        public static int MAXIMUM = Integer.MAX_VALUE;
+    }
     
     private final TriggerSink sink;
     private final TriggerSource trigger;

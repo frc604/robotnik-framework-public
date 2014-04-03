@@ -56,7 +56,7 @@ public class ActionManager {
     }
     
     public void update () {
-        final Scorekeeper r = new Scorekeeper(0);
+        final Scorekeeper r = new Scorekeeper();
         final Iterator i = new Iterator(actionTable);
         
         while (i.next()) {
@@ -64,7 +64,7 @@ public class ActionManager {
                 r.consider(i.value, ((ActionReference) i.value).getPrecedence());
         }
         
-        triggeredAction = r.score > 0 ? (ActionReference) r.victor : null;
+        triggeredAction = (ActionReference) r.getVictor();
         triggeredActionSlice.putString(triggeredAction.getName());
     }
     
