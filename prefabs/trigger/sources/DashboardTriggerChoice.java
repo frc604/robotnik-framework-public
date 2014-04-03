@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.trigger.sources;
+package com._604robotics.robotnik.prefabs.trigger.sources;
 
 import com._604robotics.robotnik.trigger.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
