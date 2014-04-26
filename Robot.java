@@ -64,6 +64,7 @@ public class Robot extends SimpleRobot {
         final Procedure mode = this.modeMap.getAutonomousMode();
         while (this.isEnabled() && this.isAutonomous()) {
             RobotProxy.tick(mode, moduleManager, coordinatorList);
+            sleep();
             this.loopTime.sample();
         }
         
@@ -82,6 +83,7 @@ public class Robot extends SimpleRobot {
         final Procedure mode = this.modeMap.getTeleopMode();
         while (this.isEnabled() && this.isOperatorControl()) {
             RobotProxy.tick(mode, moduleManager, coordinatorList);
+            sleep();
             this.loopTime.sample();
         }
         
@@ -94,8 +96,17 @@ public class Robot extends SimpleRobot {
     public void disabled () {
         Logger.log(" -- Disabled mode begin.");
         
-        while (!this.isEnabled()) RobotProxy.update(moduleManager);
+        while (!this.isEnabled()) {
+            RobotProxy.update(moduleManager);
+            sleep();
+        }
         
         Logger.log(" -- Disabled mode end.");
+    }
+    
+    private void sleep () {
+        try {
+            Thread.sleep(19);
+        } catch (Exception e) {}
     }
 }
