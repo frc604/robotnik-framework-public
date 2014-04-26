@@ -1,11 +1,6 @@
 package com._604robotics.robotnik.logging;
 
-import com.sun.squawk.microedition.io.FileConnection;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Random;
-import javax.microedition.io.Connector;
 
 public class Logger {
     public static void log (String message) {
@@ -26,36 +21,20 @@ public class Logger {
         final String line = "(" + System.currentTimeMillis() + " ms) " + message;
         
         std.println(line);
-        if (logFile != null) logFile.println(line);
+        file.println(line);
+        server.println(line);
     }
     
     private static void trace (Exception ex) {
         ex.printStackTrace();
-        if (logFile != null) logFile.println(ex.toString());
+        file.println(ex.toString());
+        server.println(ex.toString());
     }
     
-    private static final PrintStream logFile;
+    private static final LogFile file = new LogFile();
+    private static final LogServer server = new LogServer();
     
     static {
-        PrintStream result = null;
-        Exception error = null;
-        /*
-        try {
-            final FileConnection file = (FileConnection) Connector.open("file:///robotnik.log", Connector.WRITE);
-            if (!file.exists())
-                file.create();
-            
-            result = null; new PrintStream(file.openOutputStream(file.fileSize()));
-        } catch (IOException ex) {
-            error = ex;
-        }*/
-        
-        logFile = result;
-        
-        if (error != null)
-            error("Could not open log file", error);
-        else
-            log("Recording to log file \"robotnik.log\" on cRIO; session ID = "
-                    + new Random().nextInt());
+        new Thread(server).start();
     }
 }
