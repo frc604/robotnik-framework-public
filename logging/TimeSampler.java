@@ -1,6 +1,5 @@
 package com._604robotics.robotnik.logging;
 
-import com._604robotics.robotnik.logging.Logger;
 import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Timer;
 

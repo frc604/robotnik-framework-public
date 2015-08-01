@@ -9,8 +9,10 @@ public class XboxController {
     public final XboxControllerStick rightStick;
     
     public XboxController (int port) {
-        final Joystick joystick = new Joystick(port);
-        
+        this(new Joystick(port));
+    }
+    
+    public XboxController (Joystick joystick) {
         this.buttons = new XboxControllerButtons(joystick);
         
         this.leftStick  = new XboxControllerStick(joystick, 1, 2);

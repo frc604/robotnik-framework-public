@@ -10,8 +10,10 @@ public class JoystickController {
     public final ControllerAxis axisY;
     
     public JoystickController (int port) {
-        final Joystick joystick = new Joystick(port);
-        
+        this(new Joystick(port));
+    }
+    
+    public JoystickController (Joystick joystick) {
         this.buttons = new JoystickControllerButtons(joystick);
         
         this.axisX = new ControllerAxis(joystick, 1);

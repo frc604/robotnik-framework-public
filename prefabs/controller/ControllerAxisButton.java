@@ -18,6 +18,6 @@ public class ControllerAxisButton implements TriggerAccess {
     }
     
     public boolean get () {
-        return MathUtils.round(this.joystick.getRawAxis(this.axis)) == this.direction;
+        return this.joystick.getRawAxis(this.axis) * direction > 0.8;
     }
 }
