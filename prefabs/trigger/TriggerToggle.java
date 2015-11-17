@@ -1,14 +1,14 @@
 package com._604robotics.robotnik.prefabs.trigger;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
 public class TriggerToggle {
-    private final TriggerAccess trigger;
+    private final TriggerSource trigger;
     
     private boolean last = false;
     private boolean state;
     
-    private class TriggerState implements TriggerAccess {
+    private class TriggerState implements TriggerSource {
         private final boolean which;
         
         public TriggerState (boolean which) {
@@ -21,10 +21,10 @@ public class TriggerToggle {
         }
     }
     
-    public final TriggerAccess off = new TriggerState(false);
-    public final TriggerAccess on  = new TriggerState(true);
+    public final TriggerSource off = new TriggerState(false);
+    public final TriggerSource on  = new TriggerState(true);
     
-    public TriggerToggle (TriggerAccess trigger, boolean defaultValue) {
+    public TriggerToggle (TriggerSource trigger, boolean defaultValue) {
         this.trigger = trigger;
         this.state = defaultValue;
     }

@@ -1,5 +1,5 @@
 package com._604robotics.robotnik.data;
 
-public interface DataAccess {
+public interface DataSource {
     public abstract double get ();
 }

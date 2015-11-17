@@ -1,8 +1,8 @@
 package com._604robotics.robotnik.prefabs.trigger;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
-public class TriggerManual implements TriggerAccess {
+public class TriggerManual implements TriggerSource {
     private boolean triggered;
     
     public TriggerManual (boolean defaultValue) {

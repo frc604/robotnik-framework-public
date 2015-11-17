@@ -1,12 +1,12 @@
 package com._604robotics.robotnik.prefabs.measure;
 
 import com._604robotics.robotnik.procedure.Measure;
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
 public class TriggerMeasure extends Measure {
-    private final TriggerAccess trigger;
+    private final TriggerSource trigger;
 
-    public TriggerMeasure(TriggerAccess trigger) {
+    public TriggerMeasure(TriggerSource trigger) {
         this.trigger = trigger;
     }
 

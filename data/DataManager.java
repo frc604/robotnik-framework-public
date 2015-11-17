@@ -1,20 +1,17 @@
 package com._604robotics.robotnik.data;
 
-import com._604robotics.robotnik.DataProxy;
 import com._604robotics.robotnik.meta.Iterator;
 import com._604robotics.robotnik.meta.Repackager;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.InternalLogger;
 import java.util.Hashtable;
 
 public class DataManager {
     private final String moduleName;
-    
     private final Hashtable dataTable;
     
     public DataManager (String moduleName, DataMap dataMap, final IndexedTable table) {
         this.moduleName = moduleName;
-        
         this.dataTable = Repackager.repackage(dataMap.iterate(), new Repackager() {
            public Object wrap (Object key, Object value) {
                return new DataReference((Data) value, table.getSlice((String) key));
@@ -22,7 +19,7 @@ public class DataManager {
         });
     }
     
-    public DataReference getData (String name) {
+    public DataSource getData (String name) {
         final DataReference ref = (DataReference) this.dataTable.get(name);
         if (ref == null) InternalLogger.missing("DataReference", name);
         return ref;

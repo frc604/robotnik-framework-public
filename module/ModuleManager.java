@@ -2,7 +2,7 @@ package com._604robotics.robotnik.module;
 
 import com._604robotics.robotnik.meta.Iterator;
 import com._604robotics.robotnik.meta.Repackager;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.InternalLogger;
 import java.util.Hashtable;
 
@@ -23,9 +23,9 @@ public class ModuleManager {
         return ref;
     }
     
-    public void start () {
+    public void begin () {
         final Iterator i = new Iterator(this.moduleTable);
-        while (i.next()) ((ModuleReference) i.value).start();
+        while (i.next()) ((ModuleReference) i.value).begin();
     }
     
     public void update () {

@@ -1,10 +1,14 @@
 package com._604robotics.robotnik;
 
+import com._604robotics.robotnik.coordinator.connectors.ConnectorProxy;
+import com._604robotics.robotnik.trigger.TriggerProxy;
+import com._604robotics.robotnik.data.DataProxy;
+import com._604robotics.robotnik.action.ActionProxy;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.module.ModuleMap;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.logging.TimeSampler;
 import com._604robotics.robotnik.procedure.Procedure;
@@ -59,7 +63,7 @@ public class Robot extends SimpleRobot {
         Logger.log(" -- Autonomous mode begin.");
         
         this.loopTime.start();
-        RobotProxy.start(moduleManager);
+        RobotProxy.begin(moduleManager);
         
         final Procedure mode = this.modeMap.getAutonomousMode();
         while (this.isEnabled() && this.isAutonomous()) {
@@ -78,7 +82,7 @@ public class Robot extends SimpleRobot {
         Logger.log(" -- Teleop mode begin.");
         
         this.loopTime.start();
-        RobotProxy.start(moduleManager);
+        RobotProxy.begin(moduleManager);
         
         final Procedure mode = this.modeMap.getTeleopMode();
         while (this.isEnabled() && this.isOperatorControl()) {

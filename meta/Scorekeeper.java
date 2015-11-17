@@ -1,29 +1,22 @@
 package com._604robotics.robotnik.meta;
 
 public class Scorekeeper {
-    public Object victor = null;
-    public int count = 0;
+    private Object victor = null;
+    private int score = Integer.MIN_VALUE;
     
-    private final double base;
-    public double score;
-    
-    public Scorekeeper (double base) {
-        this.base = this.score = base;
-    }
-    
-    public void consider (Object item, double score) {
-        if (this.victor == null || score > this.score) {
+    public void consider (Object item, int score) {
+        if (score >= this.score) {
             this.victor = item;
             this.score = score;
         }
-        
-        this.count++;
+    }
+    
+    public Object getVictor () {
+        return this.victor;
     }
     
     public void reset () {
         this.victor = null;
-        this.count = 0;
-        
-        this.score = this.base;
+        this.score = Integer.MAX_VALUE;
     }
 }

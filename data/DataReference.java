@@ -1,21 +1,24 @@
 package com._604robotics.robotnik.data;
 
-import com._604robotics.robotnik.memory.IndexedTable.Slice;
+import com._604robotics.robotnik.network.Slice;
 
-public class DataReference implements DataAccess {
+public class DataReference implements DataSource {
     private final Data data;
-    private final Slice value;
+    private final Slice slice;
     
-    public DataReference (Data data, Slice value) {
+    private double lastValue = 0D;
+    
+    protected DataReference (Data data, Slice slice) {
         this.data = data;
-        this.value = value;
+        this.slice = slice;
     }
     
     public double get () {
-        return this.value.getNumber(0D);
+        return lastValue;
     }
     
-    public void update () {
-        this.value.putNumber(this.data.run());
+    protected void update () {
+        lastValue = data.run();
+        slice.putNumber(lastValue);
     }
 }

@@ -1,11 +1,11 @@
 package com._604robotics.robotnik.prefabs.trigger;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
-public class TriggerNot implements TriggerAccess {
-    private final TriggerAccess trigger;
+public class TriggerNot implements TriggerSource {
+    private final TriggerSource trigger;
     
-    public TriggerNot (TriggerAccess trigger) {
+    public TriggerNot (TriggerSource trigger) {
         this.trigger = trigger;
     }
     

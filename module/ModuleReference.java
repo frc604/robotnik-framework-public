@@ -3,10 +3,10 @@ package com._604robotics.robotnik.module;
 import com._604robotics.robotnik.action.ActionManager;
 import com._604robotics.robotnik.action.ActionReference;
 import com._604robotics.robotnik.data.DataManager;
-import com._604robotics.robotnik.data.DataReference;
-import com._604robotics.robotnik.memory.IndexedTable;
+import com._604robotics.robotnik.data.DataSource;
+import com._604robotics.robotnik.network.IndexedTable;
 import com._604robotics.robotnik.trigger.TriggerManager;
-import com._604robotics.robotnik.trigger.TriggerReference;
+import com._604robotics.robotnik.trigger.TriggerSource;
 
 public class ModuleReference {
     private final Module module;
@@ -20,16 +20,16 @@ public class ModuleReference {
         this.dataManager = new DataManager(name, module.getDataMap(), table.getSubTable("data"));
         this.triggerManager = new TriggerManager(name, module.getTriggerMap(), table.getSubTable("triggers"));
         
-        this.actionManager = new ActionManager(this, name, module.getActionController(), table.getSubTable("actions"));
+        this.actionManager = new ActionManager(this, name, module.getActionController(), table.getSubTable("actions"), table.getSubTable("data"));
         
         this.module = module;
     }
     
-    public DataReference getData (String name) {
+    public DataSource getData (String name) {
         return this.dataManager.getData(name);
     }
     
-    public TriggerReference getTrigger (String name) {
+    public TriggerSource getTrigger (String name) {
         return this.triggerManager.getTrigger(name);
     }
     
@@ -37,23 +37,28 @@ public class ModuleReference {
         return this.actionManager.getAction(name);
     }
     
-    public void start () {
-        this.module.start();
+    // FIXME: Run this through a Proxy.
+    protected void begin () {
+        this.module.begin();
     }
     
-    public void update () {
+    protected void update () {
         this.dataManager.update();
         this.triggerManager.update();
         
         this.actionManager.reset();
     }
     
-    public void execute () {
+    protected void execute () {
+        // FIXME: Run this through a proxy.
+        this.module.run();
+        
         this.actionManager.update();
         this.actionManager.execute();
     }
     
-    public void end () {
+    // FIXME: Run this through a Proxy.
+    protected void end () {
         this.actionManager.end();
         this.module.end();
     }

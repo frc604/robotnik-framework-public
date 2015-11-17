@@ -1,10 +1,10 @@
 package com._604robotics.robotnik.prefabs.controller;
 
-import com._604robotics.robotnik.trigger.TriggerAccess;
+import com._604robotics.robotnik.trigger.TriggerSource;
 import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class ControllerAxisButton implements TriggerAccess {
+public class ControllerAxisButton implements TriggerSource {
     private final Joystick joystick;
     private final int axis;
     

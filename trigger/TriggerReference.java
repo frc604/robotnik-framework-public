@@ -1,43 +1,24 @@
 package com._604robotics.robotnik.trigger;
 
-import com._604robotics.robotnik.memory.IndexedTable.Slice;
+import com._604robotics.robotnik.network.Slice;
 
-public class TriggerReference implements TriggerAccess {
+public class TriggerReference implements TriggerSource {
     private final Trigger trigger;
-    private final Slice value;
+    private final Slice slice;
     
-    private TriggerAccess inverse = null;
+    private boolean lastValue = false;
     
-    private class TriggerNot implements TriggerAccess {
-        private final TriggerAccess source;
-        
-        public TriggerNot (TriggerAccess source) {
-            this.source = source;
-        }
-        
-        public boolean get () {
-            return !source.get();
-        }
-    }
-    
-    public TriggerReference (Trigger trigger, Slice value) {
+    protected TriggerReference (Trigger trigger, Slice slice) {
         this.trigger = trigger;
-        this.value = value;
-    }
-    
-    public TriggerAccess not () {
-        if (this.inverse == null) {
-            this.inverse = new TriggerNot(this);
-        }
-        
-        return this.inverse;
+        this.slice = slice;
     }
     
     public boolean get () {
-        return this.value.getBoolean(false);
+        return lastValue;
     }
     
-    public void update () {
-        this.value.putBoolean(this.trigger.run());
+    protected void update () {
+        lastValue = trigger.run();
+        slice.putBoolean(lastValue);
     }
 }

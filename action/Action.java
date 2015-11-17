@@ -1,24 +1,51 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.action.field.FieldMap;
-import com._604robotics.robotnik.module.ModuleReference;
+import com._604robotics.robotnik.data.DataSource;
+import com._604robotics.robotnik.meta.Iterator;
+import com._604robotics.robotnik.trigger.TriggerSource;
+import java.util.Hashtable;
 
 public class Action {
-    private final FieldMap fieldMap;
+    private final Hashtable fields = new Hashtable();
     
-    public Action () {
-        this.fieldMap = new FieldMap();
+    private final Hashtable dataLinks    = new Hashtable();
+    private final Hashtable triggerLinks = new Hashtable();
+    
+    public void begin () {}
+    public void run () {}
+    public void end () {}
+    
+    protected Field field (String name, double defaultValue) {
+        final Field field = new Field(defaultValue);
+        fields.put(name, field);
+        return field;
     }
     
-    public Action (FieldMap fieldMap) {
-        this.fieldMap = fieldMap;
+    protected Field field (String name, boolean defaultValue) {
+        return field(name, defaultValue ? 1 : 0);
     }
     
-    public void begin (ActionData data) {}
-    public void run (ActionData data) {}
-    public void end (ActionData data) {}
+    protected DataSource data (String name) {
+        final DataLink dataLink = new DataLink();
+        dataLinks.put(name, dataLink);
+        return dataLink; 
+    }
     
-    protected FieldMap getFieldMap () {
-        return this.fieldMap;
+    protected TriggerSource trigger (String name) {
+        final TriggerLink triggerLink = new TriggerLink();
+        triggerLinks.put(name, triggerLink);
+        return triggerLink;
+    }
+    
+    protected Iterator iterateFields () {
+        return new Iterator(fields);
+    }
+    
+    protected Iterator iterateDataLinks () {
+        return new Iterator(dataLinks);
+    }
+    
+    protected Iterator iterateTriggerLinks () {
+        return new Iterator(triggerLinks);
     }
 }
