@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com._604robotics.robotnik.exceptions.NonExistentDataException;
+
 /**
  * A map containing data.
  */
@@ -23,9 +25,14 @@ public class DataMap implements Iterable<Map.Entry<String, Data>> {
      * Gets data from the map.
      * @param name Name of the data.
      * @return The retrieved data.
+     * @throws NonExistentDataException
      */
-    protected Data getData (String name) {
-        return this.dataTable.get(name);
+    protected Data getData (String name) throws NonExistentDataException {
+        Data returnData this.dataTable.get(name);
+        if (returnData == null) {
+        	throw new NonExistentDataException();
+        }
+        return returnData;
     }
 
     @Override
