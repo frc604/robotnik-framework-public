@@ -1,3 +1,4 @@
+package com._604robotics.robotnik.exceptions;
 
 public class NonExistentDataException extends Exception {
 
