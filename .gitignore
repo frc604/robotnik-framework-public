@@ -123,6 +123,7 @@ Temporary Items
 
 #My own Additions
 .recommenders
+doc/
 #Build Files generated when deploying code to RoboRIO
 build
 bin
