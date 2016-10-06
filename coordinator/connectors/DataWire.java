@@ -44,7 +44,7 @@ public class DataWire {
      * Creates a data wire, fed by a trigger.
      * @param recipient Recipient of the data.
      * @param fieldName Name of the data field.
-     * @param data Trigger to wire.
+     * @param trigger Trigger to wire.
      */
     public DataWire (DataRecipient recipient, String fieldName, TriggerAccess trigger) {
         this(recipient, fieldName, new DataTriggerAdaptor(trigger), null);
@@ -54,7 +54,7 @@ public class DataWire {
      * Creates a data wire, fed and activated by triggers.
      * @param recipient Recipient of the data.
      * @param fieldName Name of the data field.
-     * @param data Trigger to wire.
+     * @param trigger Trigger to wire.
      * @param activator Trigger activating the data wire.
      */
     public DataWire (DataRecipient recipient, String fieldName, TriggerAccess trigger, TriggerAccess activator) {

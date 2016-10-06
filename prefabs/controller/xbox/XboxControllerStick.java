@@ -20,8 +20,8 @@ public class XboxControllerStick {
     /**
      * Creates an Xbox controller stick.
      * @param joystick Xbox controller containing the stick.
-     * @param left X-axis ID.
-     * @param right Y-axis ID.
+     * @param x X-axis ID.
+     * @param y Y-axis ID.
      */
     public XboxControllerStick (Joystick joystick, int x, int y) {
         this.X = new ControllerAxis(joystick, x);

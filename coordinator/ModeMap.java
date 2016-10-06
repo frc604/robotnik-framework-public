@@ -29,7 +29,7 @@ public class ModeMap {
 
     /**
      * Sets the map's teleop mode.
-     * @param autonomousMode Teleop mode coordinator to set.
+     * @param teleopMode Teleop mode coordinator to set.
      */
     protected void setTeleopMode (Coordinator teleopMode) {
         this.teleopMode = teleopMode;

@@ -33,7 +33,7 @@ public abstract class Module {
 
     /**
      * Sets the trigger map of the module.
-     * @param dataMap The module's trigger map.
+     * @param triggerMap The module's trigger map.
      */
     protected void set (TriggerMap triggerMap) {
         this.triggerMap = triggerMap;
@@ -41,7 +41,7 @@ public abstract class Module {
 
     /**
      * Sets the action controller of the module.
-     * @param dataMap The module's action controller.
+     * @param actionController The module's action controller.
      */
     protected void set (ActionController actionController) {
         this.actionController = actionController;
