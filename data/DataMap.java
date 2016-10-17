@@ -25,12 +25,12 @@ public class DataMap implements Iterable<Map.Entry<String, Data>> {
      * Gets data from the map.
      * @param name Name of the data.
      * @return The retrieved data.
-     * @throws NonExistentDataException
+     * @throws NonExistentDataError
      */
-    protected Data getData (String name) throws NonExistentDataException {
+    protected Data getData (String name) {
         Data returnData this.dataTable.get(name);
         if (returnData == null) {
-        	throw new NonExistentDataException();
+        	throw new NonExistentDataError();
         }
         return returnData;
     }

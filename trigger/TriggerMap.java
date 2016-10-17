@@ -23,12 +23,12 @@ public class TriggerMap implements Iterable<Map.Entry<String, Trigger>> {
      * Gets a trigger.
      * @param name Name of the trigger.
      * @return The retrieved trigger.
-     * @throws NonExistentTriggerException
+     * @throws NonExistentTriggerError
      */
     protected Trigger getTrigger (String name) {
         Trigger returnTrigger = this.triggerTable.get(name);
         if (returnTrigger == null) {
-        	throw new NonExistentTriggerException();
+        	throw new NonExistentTriggerError();
         }
         return returnTrigger;
     }
