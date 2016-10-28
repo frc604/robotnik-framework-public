@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com._604robotics.robotnik.exceptions.NonExistentTriggerError;
+
 /**
  * A map containing triggers.
  */
