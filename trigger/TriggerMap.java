@@ -30,7 +30,7 @@ public class TriggerMap implements Iterable<Map.Entry<String, Trigger>> {
     protected Trigger getTrigger (String name) {
         Trigger returnTrigger = this.triggerTable.get(name);
         if (returnTrigger == null) {
-        	throw new NonExistentTriggerError();
+        	throw new NonExistentTriggerError("Attempted to access nonexistent trigger" + name);
         }
         return returnTrigger;
     }

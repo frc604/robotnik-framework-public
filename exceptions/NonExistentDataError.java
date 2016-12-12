@@ -18,8 +18,9 @@ public class NonExistentDataError extends Error {
 		super(arg0, arg1);
 	}
 
-	public NonExistentDataError(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public NonExistentDataError(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }

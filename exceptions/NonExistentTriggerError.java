@@ -18,9 +18,9 @@ public class NonExistentTriggerError extends Error {
 		super(arg0, arg1);
 	}
 
-	public NonExistentTriggerError
-(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public NonExistentTriggerError(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }
