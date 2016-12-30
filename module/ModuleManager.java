@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com._604robotics.robotnik.Safety;
+import com._604robotics.robotnik.exceptions.NonExistentModuleError;
 import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.memory.IndexedTable;
 
@@ -32,7 +33,10 @@ public class ModuleManager {
      */
     public ModuleReference getModule (String name) {
         ModuleReference ref = this.moduleTable.get(name);
-        if (ref == null) Logger.missing("ModuleReference", name);
+        if (ref == null) {
+        	Logger.missing("ModuleReference", name);
+        	throw new NonExistentModuleError("Attempted to access nonexistent module" + name);
+        }
         return ref;
     }
 
